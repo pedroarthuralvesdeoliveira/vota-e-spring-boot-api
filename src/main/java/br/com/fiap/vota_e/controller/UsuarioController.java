@@ -28,7 +28,7 @@ public class UsuarioController {
         return usuarioService.listarTodos();
     }
 
-    @GetMapping("/usuarios/{usuarioId}")
+    @DeleteMapping("/usuarios/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long usuarioId) {
         usuarioService.excluir(usuarioId);
