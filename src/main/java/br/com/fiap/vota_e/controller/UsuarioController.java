@@ -1,5 +1,7 @@
 package br.com.fiap.vota_e.controller;
 
+import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
+import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,13 @@ public class UsuarioController {
 
     @PostMapping("/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario salvar(@RequestBody Usuario usuario) {
-        return usuarioService.salvarUsuario(usuario);
+    public UsuarioExibicaoDTO salvar(@RequestBody UsuarioCadastroDTO usuarioDTO) {
+        return usuarioService.salvarUsuario(usuarioDTO);
     }
 
     @GetMapping("/usuarios")
     @ResponseStatus(HttpStatus.OK)
-    public List<Usuario> listar() {
+    public List<UsuarioExibicaoDTO> listar() {
         return usuarioService.listarTodos();
     }
 
@@ -41,12 +43,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios/{email}")
-    public Usuario buscarUsuarioPorEmail(@PathVariable String email) {
-        return usuarioService.buscarPeloEmail(email);
+    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorEmail(@PathVariable String email) {
+        try {
+            return ResponseEntity.ok(usuarioService.buscarPeloEmail(email));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Long id) {
+    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorId(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(usuarioService.buscarPorId(id));
         } catch (Exception e) {

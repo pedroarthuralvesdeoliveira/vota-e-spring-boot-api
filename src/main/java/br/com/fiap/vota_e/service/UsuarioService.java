@@ -1,7 +1,10 @@
 package br.com.fiap.vota_e.service;
 
+import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
+import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.UsuarioRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +16,29 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario salvarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioExibicaoDTO salvarUsuario(UsuarioCadastroDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
+        BeanUtils.copyProperties(usuarioDTO, usuario);
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        return new UsuarioExibicaoDTO(usuarioSalvo);
     }
 
-    public Usuario buscarPorId(Long id) {
+    public UsuarioExibicaoDTO buscarPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
 
-        return usuario.orElse(null);
+        if (usuario.isPresent()) {
+            return new UsuarioExibicaoDTO(usuario.get());
+        } else {
+            throw new RuntimeException("Usuario não encontrado!");
+        }
     }
 
-    public List<Usuario> listarTodos() {
-        return usuarioRepository.findAll();
+    public List<UsuarioExibicaoDTO> listarTodos() {
+        return usuarioRepository
+                .findAll()
+                .stream()
+                .map(UsuarioExibicaoDTO::new)
+                .toList();
     }
 
     public void excluir(Long id) {
@@ -47,11 +61,11 @@ public class UsuarioService {
         }
     }
 
-    public Usuario buscarPeloEmail(String email) {
+    public UsuarioExibicaoDTO buscarPeloEmail(String email) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
         if (usuario.isPresent()) {
-            return usuario.get();
+            return new UsuarioExibicaoDTO(usuario.get());
         } else {
             throw new RuntimeException("E-mail não existe!");
         }
