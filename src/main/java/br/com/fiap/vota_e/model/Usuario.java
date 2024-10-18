@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_usuarios")
@@ -29,4 +30,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String telefone;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Sugestao> sugestoes;
 }
