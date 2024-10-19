@@ -21,7 +21,7 @@ public class Sugestao {
             sequenceName = "SEQ_SUGESTOES",
             allocationSize = 1
     )
-    private Long id;
+    private Long sugestao_id;
     private String descricao;
     private String observacao;
     private String localizacao;
