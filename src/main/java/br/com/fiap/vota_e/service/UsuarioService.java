@@ -51,11 +51,13 @@ public class UsuarioService {
         }
     }
 
-    public Usuario atualizarUsuario(Usuario usuario) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(usuario.getId());
+    public UsuarioExibicaoDTO atualizarUsuario(UsuarioCadastroDTO usuarioDTO) {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(usuarioDTO.usuarioId());
 
         if (usuarioExistente.isPresent()) {
-            return usuarioRepository.save(usuario);
+            Usuario usuario = new Usuario();
+            BeanUtils.copyProperties(usuarioDTO, usuario);
+            return new UsuarioExibicaoDTO(usuarioRepository.save(usuario));
         } else {
             throw new RuntimeException("Usuario não encontrado!");
         }

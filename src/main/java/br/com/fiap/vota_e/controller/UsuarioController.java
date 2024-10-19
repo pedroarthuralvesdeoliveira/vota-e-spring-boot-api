@@ -2,7 +2,6 @@ package br.com.fiap.vota_e.controller;
 
 import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
 import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
-import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +37,13 @@ public class UsuarioController {
 
     @PutMapping("/usuarios")
     @ResponseStatus(HttpStatus.OK)
-    public Usuario atualizar(@RequestBody Usuario usuario) {
-        return usuarioService.atualizarUsuario(usuario);
+    public ResponseEntity<UsuarioExibicaoDTO> atualizar(@RequestBody UsuarioCadastroDTO usuario) {
+        try {
+            UsuarioExibicaoDTO usuarioExibicaoDTO = usuarioService.atualizarUsuario(usuario);
+            return ResponseEntity.ok(usuarioExibicaoDTO);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/usuarios/{email}")
