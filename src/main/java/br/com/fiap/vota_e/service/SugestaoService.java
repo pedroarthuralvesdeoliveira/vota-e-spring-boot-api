@@ -2,13 +2,12 @@ package br.com.fiap.vota_e.service;
 
 import br.com.fiap.vota_e.dto.SugestaoCadastroDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
+import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.model.Sugestao;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.SugestaoRepository;
-import br.com.fiap.vota_e.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,24 +16,33 @@ import java.util.Optional;
 @Service
 public class SugestaoService {
 
-    @Autowired
-    private SugestaoRepository sugestaoRepository;
+    private final SugestaoRepository sugestaoRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+
+    public SugestaoService(SugestaoRepository sugestaoRepository, UsuarioService usuarioService) {
+        this.sugestaoRepository = sugestaoRepository;
+        this.usuarioService = usuarioService;
+    }
 
     public SugestaoExibicaoDTO salvarSugestao(SugestaoCadastroDTO sugestaoDTO) {
         Sugestao sugestao = new Sugestao();
         BeanUtils.copyProperties(sugestaoDTO, sugestao);
 
-        Usuario usuario = usuarioRepository.findById(sugestaoDTO.usuarioId())
-                .orElseThrow(() -> new EntityNotFoundException(
+        UsuarioExibicaoDTO usuarioDTO = usuarioService.buscarPorId(sugestaoDTO.usuarioId());
+
+        if (usuarioDTO == null) {
+            throw new EntityNotFoundException(
                     "Usuário não encontrado!"
-                ));
+            );
+        }
+
+        Usuario usuario = new Usuario();
+        BeanUtils.copyProperties(usuarioDTO, usuario);
 
         sugestao.setUsuario(usuario);
-
         Sugestao sugestaoSalvo = sugestaoRepository.save(sugestao);
+
         return new SugestaoExibicaoDTO(sugestaoSalvo);
     }
 

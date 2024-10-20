@@ -3,7 +3,6 @@ package br.com.fiap.vota_e.controller;
 import br.com.fiap.vota_e.dto.SugestaoCadastroDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
 import br.com.fiap.vota_e.service.SugestaoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class SugestaoController {
-    @Autowired
-    private SugestaoService sugestaoService;
+    private final SugestaoService sugestaoService;
+
+    public SugestaoController(SugestaoService sugestaoService) {
+        this.sugestaoService = sugestaoService;
+    }
 
     @PostMapping("/sugestoes")
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,8 +48,7 @@ public class SugestaoController {
     @PutMapping("/sugestoes")
     public ResponseEntity<SugestaoExibicaoDTO> atualizar(@RequestBody SugestaoCadastroDTO sugestao) {
         try {
-            SugestaoExibicaoDTO sugestaoExibicaoDTO = sugestaoService.atualizar(sugestao);
-            return ResponseEntity.ok(sugestaoExibicaoDTO);
+            return ResponseEntity.ok(sugestaoService.atualizar(sugestao));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
