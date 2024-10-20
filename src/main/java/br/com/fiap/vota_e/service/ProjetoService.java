@@ -8,6 +8,8 @@ import br.com.fiap.vota_e.model.Projeto;
 import br.com.fiap.vota_e.model.Sugestao;
 import br.com.fiap.vota_e.repository.ProjetoRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -50,12 +52,11 @@ public class ProjetoService {
         }
     }
 
-    public List<ProjetoExibicaoDTO> listarTodos() {
+    public Page<ProjetoExibicaoDTO> listarTodos(Pageable pageable) {
         return projetoRepository
-                .findAll()
-                .stream()
+                .findAll(pageable)
                 .map(ProjetoExibicaoDTO::new)
-                .toList();
+                ;
     }
 
     public void excluir(Long id) {

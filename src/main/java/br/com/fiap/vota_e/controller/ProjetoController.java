@@ -4,6 +4,8 @@ import br.com.fiap.vota_e.dto.ProjetoCadastroDTO;
 import br.com.fiap.vota_e.dto.ProjetoExibicaoDTO;
 import br.com.fiap.vota_e.service.ProjetoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +30,8 @@ public class ProjetoController {
 
     @GetMapping("/projetos")
     @ResponseStatus(HttpStatus.OK)
-    public List<ProjetoExibicaoDTO> listar() {
-        return projetoService.listarTodos();
+    public Page<ProjetoExibicaoDTO> listar(Pageable pageable) {
+        return projetoService.listarTodos(pageable);
     }
 
     @RequestMapping(value = "/projetos", params = "id")

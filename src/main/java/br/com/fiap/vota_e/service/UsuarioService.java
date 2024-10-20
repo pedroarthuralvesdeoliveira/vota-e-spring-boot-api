@@ -6,9 +6,10 @@ import br.com.fiap.vota_e.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,12 +37,11 @@ public class UsuarioService {
         }
     }
 
-    public List<UsuarioExibicaoDTO> listarTodos() {
+    public Page<UsuarioExibicaoDTO> listarTodos(Pageable paginacao) {
         return usuarioRepository
-                .findAll()
-                .stream()
+                .findAll(paginacao)
                 .map(UsuarioExibicaoDTO::new)
-                .toList();
+                ;
     }
 
     public void excluir(Long id) {

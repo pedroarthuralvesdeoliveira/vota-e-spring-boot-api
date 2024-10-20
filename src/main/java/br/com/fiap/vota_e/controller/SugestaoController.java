@@ -4,6 +4,8 @@ import br.com.fiap.vota_e.dto.SugestaoCadastroDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
 import br.com.fiap.vota_e.service.SugestaoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +30,8 @@ public class SugestaoController {
 
     @GetMapping("/sugestoes")
     @ResponseStatus(HttpStatus.OK)
-    public List<SugestaoExibicaoDTO> listar() {
-        return sugestaoService.listarSugestoes();
+    public Page<SugestaoExibicaoDTO> listar(Pageable pageable) {
+        return sugestaoService.listarSugestoes(pageable);
     }
 
     @RequestMapping(value = "/sugestoes", params = "id")
