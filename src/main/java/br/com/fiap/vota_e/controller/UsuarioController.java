@@ -3,7 +3,6 @@ package br.com.fiap.vota_e.controller;
 import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
 import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @PostMapping("/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
@@ -39,8 +41,7 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UsuarioExibicaoDTO> atualizar(@RequestBody UsuarioCadastroDTO usuario) {
         try {
-            UsuarioExibicaoDTO usuarioExibicaoDTO = usuarioService.atualizarUsuario(usuario);
-            return ResponseEntity.ok(usuarioExibicaoDTO);
+            return ResponseEntity.ok(usuarioService.atualizarUsuario(usuario));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

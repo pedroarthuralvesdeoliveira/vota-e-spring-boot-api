@@ -5,7 +5,6 @@ import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public UsuarioExibicaoDTO salvarUsuario(UsuarioCadastroDTO usuarioDTO) {
         Usuario usuario = new Usuario();
