@@ -2,6 +2,7 @@ package br.com.fiap.vota_e.service;
 
 import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
 import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
+import br.com.fiap.vota_e.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
@@ -31,7 +32,7 @@ public class UsuarioService {
         if (usuario.isPresent()) {
             return new UsuarioExibicaoDTO(usuario.get());
         } else {
-            throw new RuntimeException("Usuario não encontrado!");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado!");
         }
     }
 
@@ -49,7 +50,7 @@ public class UsuarioService {
         if (usuario.isPresent()) {
             usuarioRepository.delete(usuario.get());
         } else {
-            throw new RuntimeException("Usuario não encontrado!");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado!");
         }
     }
 
@@ -61,7 +62,7 @@ public class UsuarioService {
             BeanUtils.copyProperties(usuarioDTO, usuario);
             return new UsuarioExibicaoDTO(usuarioRepository.save(usuario));
         } else {
-            throw new RuntimeException("Usuario não encontrado!");
+            throw new UsuarioNaoEncontradoException("Usuario não encontrado!");
         }
     }
 
@@ -71,7 +72,17 @@ public class UsuarioService {
         if (usuario.isPresent()) {
             return new UsuarioExibicaoDTO(usuario.get());
         } else {
-            throw new RuntimeException("E-mail não existe!");
+            throw new UsuarioNaoEncontradoException("Usuário com este e-mail não existe!");
+        }
+    }
+
+    public UsuarioExibicaoDTO buscarPeloTelefone(String telefone) {
+        Optional<Usuario> usuario = usuarioRepository.findByTelefone(telefone);
+
+        if (usuario.isPresent()) {
+            return new UsuarioExibicaoDTO(usuario.get());
+        } else {
+            throw new UsuarioNaoEncontradoException("Usuario com este telefone não encontrado!");
         }
     }
 }

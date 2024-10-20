@@ -3,13 +3,14 @@ package br.com.fiap.vota_e.service;
 import br.com.fiap.vota_e.dto.ProjetoCadastroDTO;
 import br.com.fiap.vota_e.dto.ProjetoExibicaoDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
+import br.com.fiap.vota_e.exception.ProjetoNaoEncontradoException;
 import br.com.fiap.vota_e.model.Projeto;
 import br.com.fiap.vota_e.model.Sugestao;
 import br.com.fiap.vota_e.repository.ProjetoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +31,6 @@ public class ProjetoService {
 
         SugestaoExibicaoDTO sugestaoDTO = sugestaoService.buscarPorId(projetoCadastroDTO.sugestao_id());
 
-        if (sugestaoDTO == null) {
-            throw new EntityNotFoundException(
-                    "Sugestão não encontrada!"
-            );
-        }
-
         Sugestao sugestao = new Sugestao();
         BeanUtils.copyProperties(sugestaoDTO, sugestao);
 
@@ -51,7 +46,7 @@ public class ProjetoService {
         if (projeto.isPresent()) {
             return new ProjetoExibicaoDTO(projeto.get());
         } else {
-            throw new EntityNotFoundException("Projeto não encontrado!");
+            throw new ProjetoNaoEncontradoException("Projeto não encontrado!");
         }
     }
 
@@ -68,7 +63,7 @@ public class ProjetoService {
         if (projeto.isPresent()) {
             projetoRepository.delete(projeto.get());
         } else {
-            throw new EntityNotFoundException("Projeto não encontrado!");
+            throw new ProjetoNaoEncontradoException("Projeto não encontrado!");
         }
     }
 
@@ -80,7 +75,20 @@ public class ProjetoService {
             BeanUtils.copyProperties(projetoCadastroDTO, projeto);
             return new ProjetoExibicaoDTO(projetoRepository.save(projeto));
         } else {
-            throw new EntityNotFoundException("Projeto não encontrado!");
+            throw new ProjetoNaoEncontradoException("Projeto não encontrado!");
         }
+    }
+
+    public List<ProjetoExibicaoDTO> listarSugestoesPorPeriodoDeCriacao(
+            Date dataInicio,
+            Date dataFim
+    ) {
+        return projetoRepository
+                .listarSugestoesPorPeriodoDeCriacao(
+                        dataInicio, dataFim
+                )
+                .stream()
+                .map(ProjetoExibicaoDTO::new)
+                .toList();
     }
 }

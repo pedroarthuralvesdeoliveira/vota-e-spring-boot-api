@@ -3,10 +3,10 @@ package br.com.fiap.vota_e.service;
 import br.com.fiap.vota_e.dto.SugestaoCadastroDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
 import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
+import br.com.fiap.vota_e.exception.SugestaoNaoEncontradaException;
 import br.com.fiap.vota_e.model.Sugestao;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.SugestaoRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +31,6 @@ public class SugestaoService {
 
         UsuarioExibicaoDTO usuarioDTO = usuarioService.buscarPorId(sugestaoDTO.usuarioId());
 
-        if (usuarioDTO == null) {
-            throw new EntityNotFoundException(
-                    "Usuário não encontrado!"
-            );
-        }
-
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuario);
 
@@ -51,7 +45,7 @@ public class SugestaoService {
         if (sugestao.isPresent()) {
             return new SugestaoExibicaoDTO(sugestao.get());
         } else {
-            throw new RuntimeException("Sugestão não existe!");
+            throw new SugestaoNaoEncontradaException("Sugestão não existe!");
         }
     }
 
@@ -68,7 +62,7 @@ public class SugestaoService {
         if (sugestao.isPresent()) {
             sugestaoRepository.delete(sugestao.get());
         } else {
-            throw new RuntimeException("Sugestão não encontrada!");
+            throw new SugestaoNaoEncontradaException("Sugestão não encontrada!");
         }
     }
 
@@ -80,7 +74,7 @@ public class SugestaoService {
             BeanUtils.copyProperties(sugestaoDTO, sugestao);
             return new SugestaoExibicaoDTO(sugestaoRepository.save(sugestao));
         } else {
-            throw new RuntimeException("Sugestão não encontrada!");
+            throw new SugestaoNaoEncontradaException("Sugestão não encontrada!");
         }
     }
 }
