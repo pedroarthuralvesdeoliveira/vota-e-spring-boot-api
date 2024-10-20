@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,5 +46,14 @@ public class SugestaoController {
     @PutMapping("/sugestoes")
     public ResponseEntity<SugestaoExibicaoDTO> atualizar(@RequestBody @Valid SugestaoCadastroDTO sugestao) {
         return ResponseEntity.ok(sugestaoService.atualizar(sugestao));
+    }
+
+    @RequestMapping(value = "/sugestoes", params = {"dataInicio", "dataFim"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<SugestaoExibicaoDTO> listarSugestoesPorPeriodoDeCriacao(
+            @RequestParam Date dataInicio,
+            @RequestParam Date dataFim
+    ) {
+        return sugestaoService.listarSugestoesPorPeriodoDeCriacao(dataInicio, dataFim);
     }
 }

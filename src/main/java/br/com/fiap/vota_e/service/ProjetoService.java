@@ -84,7 +84,7 @@ public class ProjetoService {
             Date dataFim
     ) {
         return projetoRepository
-                .listarSugestoesPorPeriodoDeCriacao(
+                .findByDataCadastroBetween(
                         dataInicio, dataFim
                 )
                 .stream()

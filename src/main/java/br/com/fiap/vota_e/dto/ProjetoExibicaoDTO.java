@@ -23,7 +23,7 @@ public record ProjetoExibicaoDTO(
                 projeto.getDataCadastro(),
                 projeto.getDataEnvio(),
                 projeto.getDataAprovacao(),
-                projeto.getSugestao().getSugestao_id()
+                projeto.getSugestao().getSugestaoId()
         );
     }
 }

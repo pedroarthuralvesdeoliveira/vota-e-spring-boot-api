@@ -10,6 +10,7 @@ import br.com.fiap.vota_e.repository.SugestaoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,5 +77,18 @@ public class SugestaoService {
         } else {
             throw new SugestaoNaoEncontradaException("Sugestão não encontrada!");
         }
+    }
+
+    public List<SugestaoExibicaoDTO> listarSugestoesPorPeriodoDeCriacao(
+            Date dataInicio,
+            Date dataFim
+    ) {
+        return sugestaoRepository
+                .findByDataCriacaoBetween(
+                        dataInicio, dataFim
+                )
+                .stream()
+                .map(SugestaoExibicaoDTO::new)
+                .toList();
     }
 }

@@ -3,6 +3,8 @@ package br.com.fiap.vota_e.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "tbl_sugestoes")
 @Getter
@@ -21,10 +23,11 @@ public class Sugestao {
             sequenceName = "SEQ_SUGESTOES",
             allocationSize = 1
     )
-    private Long sugestao_id;
+    private Long sugestaoId;
     private String descricao;
     private String observacao;
     private String localizacao;
+    private Date dataCriacao;
 
     @ManyToOne
     @JoinColumn(
