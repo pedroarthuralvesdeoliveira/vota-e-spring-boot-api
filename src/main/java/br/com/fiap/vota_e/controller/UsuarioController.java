@@ -49,8 +49,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarPeloEmail(email));
     }
 
-    @GetMapping("/usuarios/{id}")
-    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorId(@PathVariable Long id) {
+    @RequestMapping(value = "/usuarios", params = "id")
+    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorId(@RequestParam Long id) {
         return ResponseEntity.ok(usuarioService.buscarPorId(id));
     }
 

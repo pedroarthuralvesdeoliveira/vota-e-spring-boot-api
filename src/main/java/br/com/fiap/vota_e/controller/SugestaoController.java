@@ -32,8 +32,8 @@ public class SugestaoController {
         return sugestaoService.listarSugestoes();
     }
 
-    @GetMapping("/sugestoes/{id}")
-    public ResponseEntity<SugestaoExibicaoDTO> buscar(@PathVariable Long id) {
+    @RequestMapping(value = "/sugestoes", params = "id")
+    public ResponseEntity<SugestaoExibicaoDTO> buscar(@RequestParam Long id) {
         return ResponseEntity.ok(sugestaoService.buscarPorId(id));
     }
 

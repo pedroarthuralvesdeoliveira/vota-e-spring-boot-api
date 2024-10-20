@@ -32,8 +32,9 @@ public class ProjetoController {
         return projetoService.listarTodos();
     }
 
-    @GetMapping("/projetos/{id}")
-    public ResponseEntity<ProjetoExibicaoDTO> buscar(@PathVariable Long id) {
+    @RequestMapping(value = "/projetos", params = "id")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ProjetoExibicaoDTO> buscarPorId(@RequestParam Long id) {
         return ResponseEntity.ok(projetoService.buscarPorId(id));
     }
 
