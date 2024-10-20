@@ -3,10 +3,12 @@ package br.com.fiap.vota_e.controller;
 import br.com.fiap.vota_e.dto.ProjetoCadastroDTO;
 import br.com.fiap.vota_e.dto.ProjetoExibicaoDTO;
 import br.com.fiap.vota_e.service.ProjetoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,7 +22,7 @@ public class ProjetoController {
 
     @PostMapping("/projetos")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProjetoExibicaoDTO salvar(@RequestBody ProjetoCadastroDTO projetoCadastroDTO) {
+    public ProjetoExibicaoDTO salvar(@RequestBody @Valid ProjetoCadastroDTO projetoCadastroDTO) {
         return projetoService.salvar(projetoCadastroDTO);
     }
 
@@ -32,11 +34,7 @@ public class ProjetoController {
 
     @GetMapping("/projetos/{id}")
     public ResponseEntity<ProjetoExibicaoDTO> buscar(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(projetoService.buscarPorId(id));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(projetoService.buscarPorId(id));
     }
 
     @DeleteMapping("/projetos/{id}")
@@ -46,11 +44,16 @@ public class ProjetoController {
     }
 
     @PutMapping("/projetos")
-    public ResponseEntity<ProjetoExibicaoDTO> atualizar(@RequestBody ProjetoCadastroDTO projetoCadastroDTO) {
-        try {
-            return ResponseEntity.ok(projetoService.atualizar(projetoCadastroDTO));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ProjetoExibicaoDTO> atualizar(@RequestBody @Valid ProjetoCadastroDTO projetoCadastroDTO) {
+        return ResponseEntity.ok(projetoService.atualizar(projetoCadastroDTO));
+    }
+
+    @RequestMapping(value = "/projetos", params = {"dataInicio", "dataFim"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProjetoExibicaoDTO> listarSugestoesPorPeriodoDeCriacao(
+        @RequestParam Date dataInicio,
+        @RequestParam Date dataFim
+    ) {
+        return projetoService.listarSugestoesPorPeriodoDeCriacao(dataInicio, dataFim);
     }
 }

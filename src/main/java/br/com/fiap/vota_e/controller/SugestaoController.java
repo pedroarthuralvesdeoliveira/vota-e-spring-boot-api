@@ -3,6 +3,7 @@ package br.com.fiap.vota_e.controller;
 import br.com.fiap.vota_e.dto.SugestaoCadastroDTO;
 import br.com.fiap.vota_e.dto.SugestaoExibicaoDTO;
 import br.com.fiap.vota_e.service.SugestaoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class SugestaoController {
 
     @PostMapping("/sugestoes")
     @ResponseStatus(HttpStatus.CREATED)
-    public SugestaoExibicaoDTO salvar(@RequestBody SugestaoCadastroDTO sugestao) {
+    public SugestaoExibicaoDTO salvar(@RequestBody @Valid SugestaoCadastroDTO sugestao) {
         return sugestaoService.salvarSugestao(sugestao);
     }
 
@@ -32,11 +33,7 @@ public class SugestaoController {
 
     @GetMapping("/sugestoes/{id}")
     public ResponseEntity<SugestaoExibicaoDTO> buscar(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(sugestaoService.buscarPorId(id));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return ResponseEntity.ok(sugestaoService.buscarPorId(id));
     }
 
     @DeleteMapping("/sugestoes/{id}")
@@ -46,11 +43,7 @@ public class SugestaoController {
     }
 
     @PutMapping("/sugestoes")
-    public ResponseEntity<SugestaoExibicaoDTO> atualizar(@RequestBody SugestaoCadastroDTO sugestao) {
-        try {
-            return ResponseEntity.ok(sugestaoService.atualizar(sugestao));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<SugestaoExibicaoDTO> atualizar(@RequestBody @Valid SugestaoCadastroDTO sugestao) {
+        return ResponseEntity.ok(sugestaoService.atualizar(sugestao));
     }
 }
