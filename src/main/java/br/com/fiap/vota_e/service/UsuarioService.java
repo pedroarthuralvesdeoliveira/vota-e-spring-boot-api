@@ -8,6 +8,7 @@ import br.com.fiap.vota_e.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,8 +22,11 @@ public class UsuarioService {
     }
 
     public UsuarioExibicaoDTO salvarUsuario(UsuarioCadastroDTO usuarioDTO) {
+        String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioDTO.senha());
+
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuario);
+        usuario.setSenha(senhaCriptografada);
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
         return new UsuarioExibicaoDTO(usuarioSalvo);
     }
@@ -66,15 +70,15 @@ public class UsuarioService {
         }
     }
 
-    public UsuarioExibicaoDTO buscarPeloEmail(String email) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-
-        if (usuario.isPresent()) {
-            return new UsuarioExibicaoDTO(usuario.get());
-        } else {
-            throw new UsuarioNaoEncontradoException("Usuário com este e-mail não existe!");
-        }
-    }
+//    public UsuarioExibicaoDTO buscarPeloEmail(String email) {
+//        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+//
+//        if (usuario.isPresent()) {
+//            return new UsuarioExibicaoDTO(usuario.get());
+//        } else {
+//            throw new UsuarioNaoEncontradoException("Usuário com este e-mail não existe!");
+//        }
+//    }
 
     public UsuarioExibicaoDTO buscarPeloTelefone(String telefone) {
         Optional<Usuario> usuario = usuarioRepository.findByTelefone(telefone);
