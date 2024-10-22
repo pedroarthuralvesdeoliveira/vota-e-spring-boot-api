@@ -1,8 +1,11 @@
 package br.com.fiap.vota_e.controller;
 
+import br.com.fiap.vota_e.config.security.TokenService;
 import br.com.fiap.vota_e.dto.LoginDTO;
+import br.com.fiap.vota_e.dto.TokenDTO;
 import br.com.fiap.vota_e.dto.UsuarioCadastroDTO;
 import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
+import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -17,10 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UsuarioService usuarioService;
+    private final TokenService tokenService;
 
-    public AuthController(AuthenticationManager authenticationManager, UsuarioService usuarioService) {
+    public AuthController(AuthenticationManager authenticationManager, UsuarioService usuarioService, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
         this.usuarioService = usuarioService;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
@@ -33,7 +38,9 @@ public class AuthController {
 
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-        return ResponseEntity.ok().build();
+        String token = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new TokenDTO(token));
     }
 
     @PostMapping("/register")

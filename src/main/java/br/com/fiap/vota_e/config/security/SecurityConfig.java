@@ -11,10 +11,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final VerificarToken verificarToken;
+
+    public SecurityConfig(VerificarToken verificarToken) {
+        this.verificarToken = verificarToken;
+    }
+
     @Bean
     public SecurityFilterChain filtrarCadeiaDeSeguranca(HttpSecurity http) throws Exception {
         return http
@@ -24,8 +31,12 @@ public class SecurityConfig {
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(HttpMethod.GET, "/api/projetos", "/api/sugestoes").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/api/usuarios").permitAll()
-                                .requestMatchers("/api/usuarios/**", "/api/sugestoes/**","/api/projetos/**").authenticated()
+                                .requestMatchers("/api/usuarios/**", "/api/sugestoes/**","/api/projetos/**").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated()
+                )
+                .addFilterBefore(
+                        verificarToken,
+                        UsernamePasswordAuthenticationFilter.class
                 )
                 .build();
     }
