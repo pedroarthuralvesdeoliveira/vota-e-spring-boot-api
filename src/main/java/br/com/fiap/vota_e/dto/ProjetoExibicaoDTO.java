@@ -5,14 +5,14 @@ import br.com.fiap.vota_e.model.Projeto;
 import java.util.Date;
 
 public record ProjetoExibicaoDTO(
-        Long projeto_id,
+        Long projetoId,
         String descricao,
         String titulo,
         String status,
         Date dataCadastro,
         Date dataEnvio,
         Date dataAprovacao,
-        Long sugestao_id
+        Long sugestaoId
 ) {
     public ProjetoExibicaoDTO (Projeto projeto) {
         this(

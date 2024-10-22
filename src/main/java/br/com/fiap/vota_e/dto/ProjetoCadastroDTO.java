@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 public record ProjetoCadastroDTO(
-        Long projeto_id,
+        Long projetoId,
         @NotBlank(message = "A descrição é obrigatória!")
         String descricao,
         @NotBlank(message = "O título é obrigatório!")
@@ -16,6 +16,6 @@ public record ProjetoCadastroDTO(
         Date dataEnvio,
         Date dataAprovacao,
         @NotNull(message = "A sugestão é obrigatória!")
-        Long sugestao_id
+        Long sugestaoId
 ) {
 }

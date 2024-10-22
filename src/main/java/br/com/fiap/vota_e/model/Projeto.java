@@ -20,7 +20,7 @@ public class Projeto {
 
     @OneToOne
     @JoinColumn(
-            referencedColumnName = "sugestao_id"
+            referencedColumnName = "sugestaoId"
     )
     private Sugestao sugestao;
 }

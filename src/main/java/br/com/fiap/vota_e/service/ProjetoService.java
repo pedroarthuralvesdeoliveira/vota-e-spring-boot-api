@@ -31,7 +31,7 @@ public class ProjetoService {
         Projeto projeto = new Projeto();
         BeanUtils.copyProperties(projetoCadastroDTO, projeto);
 
-        SugestaoExibicaoDTO sugestaoDTO = sugestaoService.buscarPorId(projetoCadastroDTO.sugestao_id());
+        SugestaoExibicaoDTO sugestaoDTO = sugestaoService.buscarPorId(projetoCadastroDTO.sugestaoId());
 
         Sugestao sugestao = new Sugestao();
         BeanUtils.copyProperties(sugestaoDTO, sugestao);
@@ -69,7 +69,7 @@ public class ProjetoService {
     }
 
     public ProjetoExibicaoDTO atualizar(ProjetoCadastroDTO projetoCadastroDTO) {
-        Optional<Projeto> projetoOptional = projetoRepository.findById(projetoCadastroDTO.projeto_id());
+        Optional<Projeto> projetoOptional = projetoRepository.findById(projetoCadastroDTO.projetoId());
 
         if (projetoOptional.isPresent()) {
             Projeto projeto = new Projeto();

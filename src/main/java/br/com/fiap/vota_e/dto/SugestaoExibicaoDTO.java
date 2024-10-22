@@ -5,7 +5,7 @@ import br.com.fiap.vota_e.model.Sugestao;
 import java.util.Date;
 
 public record SugestaoExibicaoDTO(
-    Long sugestao_id,
+    Long sugestaoId,
     String descricao,
     String observacao,
     String localizacao,
