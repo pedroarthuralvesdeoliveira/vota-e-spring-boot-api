@@ -5,7 +5,7 @@ CREATE SEQUENCE SEQ_PROJETOS
     NOCYCLE;
 
 CREATE TABLE TBL_PROJETOS (
-                              PROJETO_ID INTEGER DEFAULT SEQ_PROJETOS.nextval NOT NULL,
+                              PROJETO_ID INTEGER DEFAULT SEQ_PROJETOS.nextval NOT NULL primary key,
                               DESCRICAO CLOB NOT NULL,
                               TITULO NVARCHAR2(200) NOT NULL,
                               STATUS NVARCHAR2(20) CHECK ( STATUS IN ('EM_ELABORACAO', 'ENVIADO', 'APROVADO', 'REJEITADO', 'CANCELADO') ) NOT NULL,

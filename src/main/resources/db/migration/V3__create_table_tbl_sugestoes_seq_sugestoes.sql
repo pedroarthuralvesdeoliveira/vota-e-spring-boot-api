@@ -5,7 +5,7 @@ CREATE SEQUENCE SEQ_SUGESTOES
     NOCYCLE;
 
 CREATE TABLE TBL_SUGESTOES (
-                               SUGESTAO_ID INTEGER DEFAULT SEQ_SUGESTOES.nextval NOT NULL,
+                               SUGESTAO_ID INTEGER DEFAULT SEQ_SUGESTOES.nextval NOT NULL primary key,
                                DESCRICAO VARCHAR (100) NOT NULL,
                                OBSERVACAO VARCHAR (50) NULL,
                                LOCALIZACAO VARCHAR (125) NULL,
@@ -13,5 +13,5 @@ CREATE TABLE TBL_SUGESTOES (
                                USUARIO_ID INTEGER NOT NULL,
                                CONSTRAINT FK_USUARIO
                                    FOREIGN KEY (USUARIO_ID)
-                                       references TBL_USUARIOS(ID)
+                                       references TBL_USUARIOS(USUARIO_ID)
 );
