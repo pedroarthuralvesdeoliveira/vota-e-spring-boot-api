@@ -45,10 +45,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.atualizarUsuario(usuario));
     }
 
-//    @GetMapping(value = "/usuarios", params = "email")
-//    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorEmail(@RequestParam String email) {
-//        return ResponseEntity.ok(usuarioService.buscarPeloEmail(email));
-//    }
+    @GetMapping(value = "/usuarios", params = "email")
+    public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorEmail(@RequestParam String email) {
+        return ResponseEntity.ok(usuarioService.buscarPeloEmail(email));
+    }
 
     @RequestMapping(value = "/usuarios", params = "id")
     public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorId(@RequestParam Long id) {

@@ -101,6 +101,8 @@ Content-Type: application/json
 ### Usuários
 - `POST /api/usuarios` - Criar usuário
 - `GET /api/usuarios` - Listar usuários
+- `GET /api/usuarios?email=` - Buscar usuário por e-mail
+- `GET /api/usuarios?telefone=` - Buscar usuário por telefone
 - `GET /api/usuarios/{id}` - Buscar usuário específico
 - `PUT /api/usuarios/{id}` - Atualizar usuário
 - `DELETE /api/usuarios/{id}` - Deletar usuário

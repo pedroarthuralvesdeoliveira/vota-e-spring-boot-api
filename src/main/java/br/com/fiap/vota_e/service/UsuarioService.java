@@ -70,15 +70,15 @@ public class UsuarioService {
         }
     }
 
-//    public UsuarioExibicaoDTO buscarPeloEmail(String email) {
-//        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-//
-//        if (usuario.isPresent()) {
-//            return new UsuarioExibicaoDTO(usuario.get());
-//        } else {
-//            throw new UsuarioNaoEncontradoException("Usuário com este e-mail não existe!");
-//        }
-//    }
+    public UsuarioExibicaoDTO buscarPeloEmail(String email) {
+        Optional<Usuario> usuario = Optional.ofNullable((Usuario) usuarioRepository.findByEmail(email));
+
+        if (usuario.isPresent()) {
+            return new UsuarioExibicaoDTO(usuario.get());
+        } else {
+            throw new UsuarioNaoEncontradoException("Usuário com este e-mail não existe!");
+        }
+    }
 
     public UsuarioExibicaoDTO buscarPeloTelefone(String telefone) {
         Optional<Usuario> usuario = usuarioRepository.findByTelefone(telefone);
