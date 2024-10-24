@@ -20,7 +20,7 @@ public record SugestaoExibicaoDTO(
                 sugestao.getObservacao(),
                 sugestao.getLocalizacao(),
                 sugestao.getDataCriacao(),
-                sugestao.getUsuario().getId(),
+                sugestao.getUsuario().getUsuarioId(),
                 sugestao.getUsuario().getNome()
         );
     }

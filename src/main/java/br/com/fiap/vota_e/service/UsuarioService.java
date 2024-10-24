@@ -5,6 +5,7 @@ import br.com.fiap.vota_e.dto.UsuarioExibicaoDTO;
 import br.com.fiap.vota_e.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.vota_e.model.Usuario;
 import br.com.fiap.vota_e.repository.UsuarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
@@ -27,7 +29,10 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuario);
         usuario.setSenha(senhaCriptografada);
+        usuario.setRole(usuarioDTO.role());
+        log.info("Salvando usuário: {}", usuario.getEmail());
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        log.info("Usuário salvo com role: {}", usuarioSalvo.getRole());
         return new UsuarioExibicaoDTO(usuarioSalvo);
     }
 
@@ -71,7 +76,7 @@ public class UsuarioService {
     }
 
     public UsuarioExibicaoDTO buscarPeloEmail(String email) {
-        Optional<Usuario> usuario = Optional.ofNullable((Usuario) usuarioRepository.findByEmail(email));
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
         if (usuario.isPresent()) {
             return new UsuarioExibicaoDTO(usuario.get());

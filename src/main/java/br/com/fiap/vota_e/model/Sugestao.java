@@ -32,7 +32,7 @@ public class Sugestao {
     @ManyToOne
     @JoinColumn(
             name = "usuario_id",
-            referencedColumnName = "id"
+            referencedColumnName = "usuario_id"
     )
     private Usuario usuario;
 }

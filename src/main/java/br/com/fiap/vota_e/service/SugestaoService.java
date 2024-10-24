@@ -31,6 +31,7 @@ public class SugestaoService {
     public SugestaoExibicaoDTO salvarSugestao(SugestaoCadastroDTO sugestaoDTO) {
         Sugestao sugestao = new Sugestao();
         BeanUtils.copyProperties(sugestaoDTO, sugestao);
+        sugestao.setDataCriacao(new Date());
 
         UsuarioExibicaoDTO usuarioDTO = usuarioService.buscarPorId(sugestaoDTO.usuarioId());
 

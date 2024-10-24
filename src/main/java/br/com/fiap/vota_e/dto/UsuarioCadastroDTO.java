@@ -17,5 +17,5 @@ public record UsuarioCadastroDTO (
         String senha,
         @NotBlank(message = "O telefone é obrigatório!")
         String telefone,
-        UsuarioRole usuarioRole
+        UsuarioRole role
 ) {}
