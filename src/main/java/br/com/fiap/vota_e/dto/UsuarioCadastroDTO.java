@@ -1,5 +1,6 @@
 package br.com.fiap.vota_e.dto;
 
+import br.com.fiap.vota_e.model.UsuarioRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,5 +17,5 @@ public record UsuarioCadastroDTO (
         String senha,
         @NotBlank(message = "O telefone é obrigatório!")
         String telefone,
-        String role
+        UsuarioRole usuarioRole
 ) {}

@@ -20,11 +20,11 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "USUARIOS_SEQ"
+            generator = "SEQ_USUARIOS"
     )
     @SequenceGenerator(
-            name = "USUARIOS_SEQ",
-            sequenceName = "USUARIOS_SEQ",
+            name = "SEQ_USUARIOS",
+            sequenceName = "SEQ_USUARIOS",
             allocationSize = 1
     )
     private Long id;
