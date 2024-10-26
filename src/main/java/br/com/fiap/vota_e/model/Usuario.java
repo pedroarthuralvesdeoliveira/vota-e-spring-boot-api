@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@AttributeOverride(name = "id", column = @Column(name = "usuario_id"))
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(
@@ -29,7 +28,7 @@ public class Usuario implements UserDetails {
             allocationSize = 1
     )
     @Column(name = "usuario_id")
-    private Long usuarioId;
+    private Long id;
 
     private String nome;
     private String email;

@@ -23,7 +23,8 @@ public class Sugestao {
             sequenceName = "SEQ_SUGESTOES",
             allocationSize = 1
     )
-    private Long sugestaoId;
+    @Column(name = "sugestao_id")
+    private Long id;
     private String descricao;
     private String observacao;
     private String localizacao;

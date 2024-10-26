@@ -15,12 +15,12 @@ public record SugestaoExibicaoDTO(
 ) {
     public SugestaoExibicaoDTO (Sugestao sugestao) {
         this(
-                sugestao.getSugestaoId(),
+                sugestao.getId(),
                 sugestao.getDescricao(),
                 sugestao.getObservacao(),
                 sugestao.getLocalizacao(),
                 sugestao.getDataCriacao(),
-                sugestao.getUsuario().getUsuarioId(),
+                sugestao.getUsuario().getId(),
                 sugestao.getUsuario().getNome()
         );
     }

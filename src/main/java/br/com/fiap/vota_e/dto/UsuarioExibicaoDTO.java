@@ -12,7 +12,7 @@ public record UsuarioExibicaoDTO(
 ) {
     public UsuarioExibicaoDTO (Usuario usuario) {
         this(
-                usuario.getUsuarioId(),
+                usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
                 usuario.getTelefone(),
