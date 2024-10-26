@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@AttributeOverride(name = "id", column = @Column(name = "usuario_id"))
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(
