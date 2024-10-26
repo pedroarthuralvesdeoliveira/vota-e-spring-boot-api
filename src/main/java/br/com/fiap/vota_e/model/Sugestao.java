@@ -23,7 +23,7 @@ public class Sugestao {
             sequenceName = "SEQ_SUGESTOES",
             allocationSize = 1
     )
-    @Column(name = "sugestao_id")
+    @Column(name = "ID")
     private Long id;
     private String descricao;
     private String observacao;
@@ -32,8 +32,8 @@ public class Sugestao {
 
     @ManyToOne
     @JoinColumn(
-            name = "usuario_id",
-            referencedColumnName = "usuario_id"
+            name = "USUARIO_ID",
+            referencedColumnName = "ID"
     )
     private Usuario usuario;
 }

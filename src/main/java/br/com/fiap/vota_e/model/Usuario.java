@@ -27,7 +27,7 @@ public class Usuario implements UserDetails {
             sequenceName = "SEQ_USUARIOS",
             allocationSize = 1
     )
-    @Column(name = "USUARIO_ID")
+    @Column(name = "ID")
     private Long id;
     @Column(name = "NOME")
     private String nome;

@@ -23,7 +23,7 @@ public class Projeto {
             sequenceName = "SEQ_PROJETOS",
             allocationSize = 1
     )
-    @Column(name = "projeto_id")
+    @Column(name = "ID")
     private Long id;
     private String descricao;
     private String titulo;
@@ -35,7 +35,7 @@ public class Projeto {
     @OneToOne
     @JoinColumn(
             name = "sugestao_id",
-            referencedColumnName = "sugestao_id"
+            referencedColumnName = "ID"
     )
     private Sugestao sugestao;
 }
