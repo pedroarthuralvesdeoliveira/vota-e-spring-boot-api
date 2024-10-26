@@ -27,15 +27,19 @@ public class Usuario implements UserDetails {
             sequenceName = "SEQ_USUARIOS",
             allocationSize = 1
     )
-    @Column(name = "usuario_id")
+    @Column(name = "USUARIO_ID")
     private Long id;
-
+    @Column(name = "NOME")
     private String nome;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "SENHA")
     private String senha;
+    @Column(name = "TELEFONE")
     private String telefone;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
     private UsuarioRole role;
 
     @OneToMany(mappedBy = "usuario")
